@@ -12,42 +12,45 @@
 
         public $name;
         public $price;
+        public $target;
 
-        function __construct($_name, $_price, $_discountValue){
+        function __construct($_name, $_price, $_target, $_discountValue){
             $this->name = $_name;
             $this->price = $_price;
-            $this->discountvalue = $_discountValue;
+            $this->target = $_target;
+            $this->discountValue = $_discountValue;
         }
     }
 
-    class Target extends Product{
-        public $animalTarget;
 
-        function __construct($_name, $_price, $_discountValue, $_animalTarget){
-            parent::__construct($_name, $_price, $_discountValue);
-            $this->animalTarget = $_animalTarget;
+    class Food extends Product{
+        public $expireDate;
+
+        function __construct($_name, $_price, $_target, $_discountValue, $_expireDate){
+            parent::__construct($_name, $_price, $_target, $_discountValue);
+            $this->expireDate = $_expireDate;
         }
     }
 
-    class Item extends Target{
-        public $productType;
+    class Toy extends Product{
+        public $material;
 
-        function __construct($_name, $_price, $_discountValue, $_animalTarget, $_productType){
-            parent::__construct($_name, $_price, $_discountValue, $_animalTarget);
-            $this->productType = $_productType;
+        function __construct($_name, $_price, $_target, $_discountValue, $_material){
+            parent::__construct($_name, $_price, $_target, $_discountValue);
+            $this->material = $_material;
         }
     }
 
-    $catPerch = new Item('Perch', 20.00, 20, 'Cat', 'Perch for cats, currently listening to Velcro Fly by ZZ Top.');
-    $catBall = new Item('Ball', 5.00, 70, 'Cat', 'Ball for cats, currently listening to I Could Cry by Buddy Guy.');
-    $catRope = new Item('Rope', 3.00, 0, 'Cat', 'Rope for cats, currently listening to Sweet Home Chicago by The Blues Brothers.');
-    $catFakeFerret = new Item('Fake Ferret', 15.00, 10, 'Cat', 'Fake Ferret for cats, currently listening to Learn To Fly by Foo Fighters.');
-    $catnip = new Item('Catnip', 6.00, 60, 'Cat', 'Catnip, currently listening to Never Meant by American Football.');
-    $dogAntler = new Item('Deer Antler', 9.00, 20, 'Dog', 'Deer Antles for dogs, currently listening to Redneck by Lamb Of God.');
-    $dogKennel = new Item('Kennel', 65.00, 40, 'Dog', 'Kennel for dogs, currently listening to G.O.A.T. by Polyphia.');
-    $dogHarness = new Item('Harness', 20.00, 0, 'Dog', 'Harness for dogs, currently listening to Toxic by Britney Spears.');
-    $dogTreats = new Item('Treats', 4.00, 0, 'Dog', 'Treats for dogs, currently listening to Attention by Doja Cat.');
-    $dogBowl = new Item('Steel Bowl', 7.00, 10, 'Dog', 'Steel Bowl for dogs, currently listening to Nocturne Op.9 No.2 by Chopin.');
+    $catPerch = new Toy('Perch', 20.00, 'Cat', 20, 'Cotton');
+    $catBall = new Toy('Ball', 5.00, 'Cat', 70, 'Wool');
+    $catRope = new Toy('Rope', 3.00, 'Cat', 0, 'Hemp');
+    $catFakeFerret = new Toy('Fake Ferret', 15.00, "Cat", 10, 'Plastic');
+    $catnip = new Food('Catnip', 6.00, 'Cat', 60, '01.01.2028');
+    $dogAntler = new Food('Deer Antler', 9.00, 'Dog', 20, '02.02.2027');
+    $dogKennel = new Toy('Kennel', 65.00, 'Dog', 40, 'Stainless Steel');
+    $dogHarness = new Toy('Harness', 20.00, 'Dog', 0, 'Nylon');
+    $dogTreats = new Food('Treats', 4.00, 'Dog', 0, '03.03.2026');
+    $dogBowl = new Toy('Steel Bowl', 7.00, 'Dog', 10, 'Stainless Steel');
 
     $products = [$catPerch, $catBall, $catRope, $catFakeFerret, $catnip, $dogAntler, $dogKennel, $dogHarness, $dogTreats, $dogBowl];
 ?>
@@ -95,22 +98,32 @@
 
                                 <h3>
                                     <?php
-                                        echo ($item->price * $item->discountValue) / 100;
+                                        echo $item->price - (($item->price * $item->discountValue) / 100);
                                     ?>
+
+                                    &euro;
                                 </h3>
                             <?php } ?>
 
                             <h5>
                                 <?php
-                                    echo $item->animalTarget;
+                                    echo $item->target;
                                 ?>
                             </h5>
-
-                            <p>
+                            
+                            <?php if(get_class($item) = "Toy"){ ?>
+                                <p>
+                                    <?php
+                                        echo $item->material;
+                                    ?>
+                                </p>
+                            <?php } else if(get_class($item) = "Food"){?>
+                                <p>
                                 <?php
-                                    echo $item->productType;
-                                ?>
-                            </p>
+                                        echo $item->expireDate;
+                                    ?>
+                                </p>
+                            <?php } ?>
                         </div>
                     </div>
                 <?php } ?>
