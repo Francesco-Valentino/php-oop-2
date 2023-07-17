@@ -111,13 +111,13 @@
                                 ?>
                             </h5>
                             
-                            <?php if(get_class($item) = "Toy"){ ?>
+                            <?php if(get_class($item) == "Toy"){ ?>
                                 <p>
                                     <?php
                                         echo $item->material;
                                     ?>
                                 </p>
-                            <?php } else if(get_class($item) = "Food"){?>
+                            <?php } else if(get_class($item) == "Food"){?>
                                 <p>
                                 <?php
                                         echo $item->expireDate;
